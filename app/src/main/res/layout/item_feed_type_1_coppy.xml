@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,64 +11,58 @@
         android:id="@+id/btn_option"
         android:layout_width="@dimen/size_40"
         android:layout_height="@dimen/size_40"
-        android:layout_alignParentRight="true"
         android:padding="@dimen/size_12"
-        android:src="@drawable/ic_three_dot_black6" />
+        android:src="@drawable/ic_three_dot_black6"
+        app:layout_constraintRight_toRightOf="@id/item_view"
+        app:layout_constraintTop_toTopOf="@id/item_view" />
 
-    <RelativeLayout
-        android:visibility="visible"
-        android:id="@+id/layout_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/btn_option"
-        android:paddingLeft="@dimen/size_10"
-        android:paddingTop="@dimen/size_10"
-        android:paddingRight="@dimen/size_3"
-        android:paddingBottom="@dimen/size_15">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="@dimen/size_40"
-            android:layout_height="@dimen/size_40"
-            android:scaleType="centerCrop" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/iv_avatar"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/iv_avatar"
-            android:text="Nhà Trong Ngõ"
-            android:textColor="@color/black_0"
-            android:textSize="@dimen/text_14"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_name"
-            android:layout_marginLeft="@dimen/size_10"
-            android:layout_marginTop="@dimen/size_2"
-            android:layout_toRightOf="@id/iv_avatar"
-            android:text="11 Tháng 10 lúc 21:22"
-            android:textColor="@color/black_9"
-            android:textSize="@dimen/text_12" />
-
-        <ImageView
-            android:id="@+id/iv_privacy"
-            android:layout_width="@dimen/size_12"
-            android:layout_height="@dimen/size_12"
-            android:layout_alignTop="@id/tv_time"
-            android:layout_alignBottom="@id/tv_time"
-            android:layout_marginLeft="@dimen/size_5"
-            android:layout_toRightOf="@id/tv_time"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_privacy_public" />
-    </RelativeLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
+        android:layout_marginLeft="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_10"
+        android:scaleType="centerCrop"
+        app:layout_constraintLeft_toLeftOf="@id/item_view"
+        app:layout_constraintTop_toTopOf="@id/item_view" />
 
     <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Nhà Trong Ngõ Nhà Trong Ngõ Nhà Trong Ngõ Nhà Trong Ngõ"
+        android:textColor="@color/black_0"
+        android:textSize="@dimen/text_14"
+        app:layout_constraintTop_toTopOf="@id/iv_avatar"
+        app:layout_constraintLeft_toRightOf="@id/iv_avatar"
+        app:layout_constraintRight_toLeftOf="@id/btn_option"
+        android:textStyle="bold" />
+
+    <!--<TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_marginLeft="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_2"
+        android:layout_toRightOf="@id/iv_avatar"
+        android:text="11 Tháng 10 lúc 21:22"
+        android:textColor="@color/black_9"
+        android:textSize="@dimen/text_12" />
+
+    <ImageView
+        android:id="@+id/iv_privacy"
+        android:layout_width="@dimen/size_12"
+        android:layout_height="@dimen/size_12"
+        android:layout_alignTop="@id/tv_time"
+        android:layout_alignBottom="@id/tv_time"
+        android:layout_marginLeft="@dimen/size_5"
+        android:layout_toRightOf="@id/tv_time"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_privacy_public" />-->
+
+    <!--<TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,30 +70,38 @@
         android:layout_marginLeft="@dimen/size_10"
         android:layout_marginRight="@dimen/size_10"
         android:textColor="@color/black_3"
-        android:textSize="@dimen/text_14"
-        android:visibility="visible" />
+        android:textSize="@dimen/text_14" />
 
-    <ImageView
+    <RelativeLayout
+        android:id="@+id/layout_video"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_200"
         android:layout_below="@id/tv_title"
-        android:layout_marginTop="@dimen/size_10"
-        android:id="@+id/iv_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:adjustViewBounds="true"
-        android:visibility="visible" />
+        android:layout_marginTop="@dimen/size_10">
+
+        <ImageView
+            android:id="@+id/iv_video_thumb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="@dimen/size_68"
+            android:layout_height="@dimen/size_68"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_play_white" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/layout_reaction_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iv_image"
+        android:layout_below="@id/layout_video"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/size_8"
         android:paddingTop="@dimen/size_10"
-        android:paddingBottom="@dimen/size_10"
-        android:visibility="visible">
+        android:paddingBottom="@dimen/size_10">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ic_like"
@@ -205,16 +206,14 @@
         android:layout_below="@id/layout_reaction_count"
         android:layout_marginLeft="@dimen/size_10"
         android:layout_marginRight="@dimen/size_10"
-        android:background="@color/black_e6"
-        android:visibility="visible" />
+        android:background="@color/black_e6" />
 
     <LinearLayout
         android:id="@+id/layout_reaction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/v_under_reaction_count"
-        android:orientation="horizontal"
-        android:visibility="visible">
+        android:orientation="horizontal">
 
         <com.example.tonghai.testapp.view.RippleViewLinear
             android:id="@+id/ripple_btn_like"
@@ -290,5 +289,5 @@
                 android:textColor="@color/black_6"
                 android:textSize="@dimen/text_14" />
         </com.example.tonghai.testapp.view.RippleViewLinear>
-    </LinearLayout>
-</RelativeLayout>
+    </LinearLayout>-->
+</android.support.constraint.ConstraintLayout>

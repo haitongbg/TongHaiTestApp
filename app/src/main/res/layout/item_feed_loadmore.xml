@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/size_8"
+    android:paddingLeft="@dimen/size_8"
+    android:background="@color/black_f1"
+    android:paddingRight="@dimen/size_8"
+    android:paddingTop="@dimen/size_8">
+
+    <com.example.tonghai.testapp.view.ProgressWheel
+        android:id="@+id/progress_loadmore"
+        android:layout_width="@dimen/size_20"
+        android:layout_height="@dimen/size_20"
+        app:matProg_barColor="@color/black_9"
+        app:matProg_barWidth="2dp" />
+
+    <TextView
+        android:id="@+id/tv_loadmore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="Đang tải thêm..."
+        android:textColor="@color/black_9"
+        android:textSize="@dimen/text_14" />
+</LinearLayout>

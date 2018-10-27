@@ -32,6 +32,10 @@ public class NewsFeed implements Parcelable{
     public NewsFeed() {
     }
 
+    public NewsFeed(int card_type) {
+        this.card_type = card_type;
+    }
+
     protected NewsFeed(Parcel in) {
         shares = in.createTypedArrayList(Share.CREATOR);
         commentData = in.readParcelable(CommentData.class.getClassLoader());
@@ -146,6 +150,14 @@ public class NewsFeed implements Parcelable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public ArrayList<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<Image> images) {
+        this.images = images;
     }
 
     public static class CommentData implements Parcelable{
