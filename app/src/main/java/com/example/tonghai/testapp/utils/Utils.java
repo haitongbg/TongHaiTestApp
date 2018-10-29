@@ -146,7 +146,7 @@ public class Utils {
     public static String converTimeMillisToTimeAgo(long time) {
         String dateTimeReturn = "";
         try {
-            Date past = new Date(time);
+            Date past = new Date(time*1000);
             Date now = new Date();
             long seconds = TimeUnit.MILLISECONDS.toSeconds(now.getTime() - past.getTime());
             long minutes = TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime());

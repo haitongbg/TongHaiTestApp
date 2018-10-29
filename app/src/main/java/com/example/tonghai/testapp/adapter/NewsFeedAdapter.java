@@ -5,11 +5,14 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.Barrier;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -146,14 +149,16 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView tvTime;
         @BindView(R.id.iv_privacy)
         ImageView ivPrivacy;
-        @BindView(R.id.layout_info)
-        RelativeLayout layoutInfo;
+        @BindView(R.id.barrier_header)
+        Barrier barrierHeader;
         @BindView(R.id.tv_title)
         TextView tvTitle;
+        @BindView(R.id.frame_player)
+        FrameLayout framePlayer;
         @BindView(R.id.iv_video_thumb)
         ImageView ivVideoThumb;
-        @BindView(R.id.layout_video)
-        RelativeLayout layoutVideo;
+        @BindView(R.id.btn_play)
+        ImageView btnPlay;
         @BindView(R.id.ic_like)
         CircleImageView icLike;
         @BindView(R.id.ic_heart)
@@ -182,10 +187,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RippleViewLinear rippleBtnComment;
         @BindView(R.id.ripple_btn_share)
         RippleViewLinear rippleBtnShare;
-        @BindView(R.id.layout_reaction)
-        LinearLayout layoutReaction;
         @BindView(R.id.item_view)
-        RelativeLayout itemView;
+        ConstraintLayout itemView;
 
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -225,16 +228,20 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 } else tvTitle.setVisibility(View.GONE);
                 Video video = newsFeed.getVideo();
                 if (video != null) {
-                    layoutVideo.setVisibility(View.VISIBLE);
+                    framePlayer.setVisibility(View.VISIBLE);
+                    ivVideoThumb.setVisibility(View.VISIBLE);
+                    btnPlay.setVisibility(View.VISIBLE);
                     int height = screenWidth * 16 / 9;
                     if (video.getWidth() > 0 && video.getHeight() > 0) {
                         height = screenWidth * video.getHeight() / video.getWidth();
                     }
-                    layoutVideo.getLayoutParams().width = screenWidth;
-                    layoutVideo.getLayoutParams().height = height;
+                    framePlayer.getLayoutParams().width = screenWidth;
+                    framePlayer.getLayoutParams().height = height;
+                    ivVideoThumb.getLayoutParams().width = screenWidth;
+                    ivVideoThumb.getLayoutParams().height = height;
                     String thumb = video.getThumb_url();
                     if (thumb != null && !thumb.isEmpty())
-                        mRequestManager.load(thumb).listener(new RequestListener<Drawable>() {
+                        mRequestManager.load(thumb).thumbnail(0.1f).listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                 return false;
@@ -246,7 +253,11 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                                 return false;
                             }
                         }).into(screenWidth, height);
-                } else layoutVideo.setVisibility(View.GONE);
+                } else {
+                    framePlayer.setVisibility(View.GONE);
+                    ivVideoThumb.setVisibility(View.GONE);
+                    btnPlay.setVisibility(View.GONE);
+                }
                 NewsFeed.LikeData likeData = newsFeed.getLikeData();
                 if (likeData != null) {
                     icLike.setVisibility(View.GONE);
@@ -291,8 +302,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView tvTime;
         @BindView(R.id.iv_privacy)
         ImageView ivPrivacy;
-        @BindView(R.id.layout_info)
-        RelativeLayout layoutInfo;
+        @BindView(R.id.barrier_header)
+        Barrier barrierHeader;
         @BindView(R.id.tv_title)
         TextView tvTitle;
         @BindView(R.id.ic_like)
@@ -323,10 +334,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RippleViewLinear rippleBtnComment;
         @BindView(R.id.ripple_btn_share)
         RippleViewLinear rippleBtnShare;
-        @BindView(R.id.layout_reaction)
-        LinearLayout layoutReaction;
         @BindView(R.id.item_view)
-        RelativeLayout itemView;
+        ConstraintLayout itemView;
 
         public TextViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -408,8 +417,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView tvTime;
         @BindView(R.id.iv_privacy)
         ImageView ivPrivacy;
-        @BindView(R.id.layout_info)
-        RelativeLayout layoutInfo;
+        @BindView(R.id.barrier_header)
+        Barrier barrierHeader;
         @BindView(R.id.tv_title)
         TextView tvTitle;
         @BindView(R.id.iv_image)
@@ -442,10 +451,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RippleViewLinear rippleBtnComment;
         @BindView(R.id.ripple_btn_share)
         RippleViewLinear rippleBtnShare;
-        @BindView(R.id.layout_reaction)
-        LinearLayout layoutReaction;
         @BindView(R.id.item_view)
-        RelativeLayout itemView;
+        ConstraintLayout itemView;
 
         public ImageSingleViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -487,24 +494,6 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     Image image = newsFeed.getImages().get(0);
                     if (image.getLink() != null && !image.getLink().isEmpty()) {
                         ivImage.setVisibility(View.VISIBLE);
-                        /*int height = screenWidth * 16 / 9;
-                        if (image.getWidth() > 0 && image.getHeight() > 0) {
-                            height = screenWidth * image.getHeight() / image.getWidth();
-                        }
-                        ivImage.getLayoutParams().width = screenWidth;
-                        ivImage.getLayoutParams().height = height;
-                        mRequestManager.load(image.getLink()).listener(new RequestListener<Drawable>() {
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                ivImage.setImageDrawable(resource);
-                                return false;
-                            }
-                        }).into(screenWidth, height);*/
                         mRequestManager.load(image).into(ivImage);
                     } else ivImage.setVisibility(View.GONE);
                 } else ivImage.setVisibility(View.GONE);
@@ -552,8 +541,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView tvTime;
         @BindView(R.id.iv_privacy)
         ImageView ivPrivacy;
-        @BindView(R.id.layout_info)
-        RelativeLayout layoutInfo;
+        @BindView(R.id.barrier_header)
+        Barrier barrierHeader;
         @BindView(R.id.tv_title)
         TextView tvTitle;
         @BindView(R.id.iv_2n3_1)
@@ -562,8 +551,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ImageView iv2n32;
         @BindView(R.id.iv_2n3_3)
         ImageView iv2n33;
-        @BindView(R.id.layout_image)
-        LinearLayout layoutImage;
+        @BindView(R.id.barrier_body)
+        Barrier barrierBody;
         @BindView(R.id.ic_like)
         CircleImageView icLike;
         @BindView(R.id.ic_heart)
@@ -592,10 +581,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RippleViewLinear rippleBtnComment;
         @BindView(R.id.ripple_btn_share)
         RippleViewLinear rippleBtnShare;
-        @BindView(R.id.layout_reaction)
-        LinearLayout layoutReaction;
         @BindView(R.id.item_view)
-        RelativeLayout itemView;
+        ConstraintLayout itemView;
 
         public Image2n3ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -633,11 +620,12 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     tvTitle.setText(title);
                     tvTitle.setVisibility(View.VISIBLE);
                 } else tvTitle.setVisibility(View.GONE);
-                layoutImage.getLayoutParams().height = screenWidth;
+                iv2n31.getLayoutParams().height = screenWidth;
                 ArrayList<Image> images = newsFeed.getImages();
                 if (images.size() == 2) {
                     iv2n33.setVisibility(View.GONE);
-                    mRequestManager.load(images.get(0).getLink()).listener(new RequestListener<Drawable>() {
+                    iv2n32.getLayoutParams().height = screenWidth;
+                    mRequestManager.load(images.get(0).getLink()).thumbnail(0.1f).listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             return false;
@@ -649,7 +637,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             return false;
                         }
                     }).into(screenWidth, screenWidth);
-                    mRequestManager.load(images.get(1).getLink()).listener(new RequestListener<Drawable>() {
+                    mRequestManager.load(images.get(1).getLink()).thumbnail(0.1f).listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             return false;
@@ -662,8 +650,9 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         }
                     }).into(screenWidth, screenWidth);
                 } else {
+                    iv2n32.getLayoutParams().height = (screenWidth - mContext.getResources().getDimensionPixelSize(R.dimen.size_2)) / 2;
                     iv2n33.setVisibility(View.VISIBLE);
-                    mRequestManager.load(images.get(0).getLink()).listener(new RequestListener<Drawable>() {
+                    mRequestManager.load(images.get(0).getLink()).thumbnail(0.1f).listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             return false;
@@ -675,7 +664,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             return false;
                         }
                     }).into(screenWidth, screenWidth);
-                    mRequestManager.load(images.get(1).getLink()).listener(new RequestListener<Drawable>() {
+                    mRequestManager.load(images.get(1).getLink()).thumbnail(0.1f).listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             return false;
@@ -687,7 +676,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             return false;
                         }
                     }).into(screenWidth / 2, screenWidth / 2);
-                    mRequestManager.load(images.get(2).getLink()).listener(new RequestListener<Drawable>() {
+                    mRequestManager.load(images.get(2).getLink()).thumbnail(0.1f).listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             return false;
@@ -744,8 +733,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView tvTime;
         @BindView(R.id.iv_privacy)
         ImageView ivPrivacy;
-        @BindView(R.id.layout_info)
-        RelativeLayout layoutInfo;
+        @BindView(R.id.barrier_header)
+        Barrier barrierHeader;
         @BindView(R.id.tv_title)
         TextView tvTitle;
         @BindView(R.id.iv_4n_1)
@@ -758,8 +747,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ImageView iv4n4;
         @BindView(R.id.tv_more_image)
         TextView tvMoreImage;
-        @BindView(R.id.layout_image)
-        LinearLayout layoutImage;
+        @BindView(R.id.barrier_body)
+        Barrier barrierBody;
         @BindView(R.id.ic_like)
         CircleImageView icLike;
         @BindView(R.id.ic_heart)
@@ -788,10 +777,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RippleViewLinear rippleBtnComment;
         @BindView(R.id.ripple_btn_share)
         RippleViewLinear rippleBtnShare;
-        @BindView(R.id.layout_reaction)
-        LinearLayout layoutReaction;
         @BindView(R.id.item_view)
-        RelativeLayout itemView;
+        ConstraintLayout itemView;
 
         public Image4nViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -829,9 +816,12 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     tvTitle.setText(title);
                     tvTitle.setVisibility(View.VISIBLE);
                 } else tvTitle.setVisibility(View.GONE);
-                layoutImage.getLayoutParams().height = screenWidth;
+                iv4n1.getLayoutParams().height = (screenWidth - mContext.getResources().getDimensionPixelSize(R.dimen.size_2)) * 2 / 3;
+                iv4n2.getLayoutParams().height = (screenWidth - mContext.getResources().getDimensionPixelSize(R.dimen.size_2)) / 3;
+                iv4n3.getLayoutParams().height = (screenWidth - mContext.getResources().getDimensionPixelSize(R.dimen.size_2)) / 3;
+                iv4n4.getLayoutParams().height = (screenWidth - mContext.getResources().getDimensionPixelSize(R.dimen.size_2)) / 3;
                 ArrayList<Image> images = newsFeed.getImages();
-                mRequestManager.load(images.get(0).getLink()).listener(new RequestListener<Drawable>() {
+                mRequestManager.load(images.get(0).getLink()).thumbnail(0.1f).listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         return false;
@@ -843,7 +833,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         return false;
                     }
                 }).into(screenWidth, screenWidth);
-                mRequestManager.load(images.get(1).getLink()).listener(new RequestListener<Drawable>() {
+                mRequestManager.load(images.get(1).getLink()).thumbnail(0.1f).listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         return false;
@@ -854,8 +844,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         iv4n2.setImageDrawable(resource);
                         return false;
                     }
-                }).into(screenWidth/3, screenWidth/3);
-                mRequestManager.load(images.get(2).getLink()).listener(new RequestListener<Drawable>() {
+                }).into(screenWidth / 3, screenWidth / 3);
+                mRequestManager.load(images.get(2).getLink()).thumbnail(0.1f).listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         return false;
@@ -866,8 +856,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         iv4n3.setImageDrawable(resource);
                         return false;
                     }
-                }).into(screenWidth/3, screenWidth/3);
-                mRequestManager.load(images.get(3).getLink()).listener(new RequestListener<Drawable>() {
+                }).into(screenWidth / 3, screenWidth / 3);
+                mRequestManager.load(images.get(3).getLink()).thumbnail(0.1f).listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         return false;
@@ -878,7 +868,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         iv4n4.setImageDrawable(resource);
                         return false;
                     }
-                }).into(screenWidth/3, screenWidth/3);
+                }).into(screenWidth / 3, screenWidth / 3);
                 if (images.size() == 4) {
                     tvMoreImage.setVisibility(View.GONE);
                 } else {

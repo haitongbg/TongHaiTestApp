@@ -1,144 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/size_10"
+    android:layout_height="wrap_content"
     android:background="@color/white">
 
     <ImageView
         android:id="@+id/btn_option"
         android:layout_width="@dimen/size_40"
         android:layout_height="@dimen/size_40"
-        android:layout_alignParentRight="true"
         android:padding="@dimen/size_12"
-        android:src="@drawable/ic_three_dot_black6" />
+        android:src="@drawable/ic_three_dot_black6"
+        app:layout_constraintRight_toRightOf="@id/item_view"
+        app:layout_constraintTop_toTopOf="@id/item_view" />
 
-    <RelativeLayout
-        android:visibility="visible"
-        android:id="@+id/layout_info"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
+        android:layout_marginLeft="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_10"
+        android:scaleType="centerCrop"
+        app:layout_constraintLeft_toLeftOf="@id/item_view"
+        app:layout_constraintTop_toTopOf="@id/item_view" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Nhà Trong Ngõ"
+        android:textColor="@color/black_0"
+        android:textSize="@dimen/text_14"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/iv_avatar"
+        app:layout_constraintRight_toLeftOf="@id/btn_option"
+        app:layout_constraintTop_toTopOf="@id/iv_avatar" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_marginLeft="@dimen/size_10"
+        android:text="11 Tháng 10 lúc 21:22"
+        android:textColor="@color/black_9"
+        android:textSize="@dimen/text_12"
+        app:layout_constraintLeft_toRightOf="@id/iv_avatar"
+        app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+    <ImageView
+        android:id="@+id/iv_privacy"
+        android:layout_width="@dimen/size_12"
+        android:layout_height="@dimen/size_12"
+        android:layout_marginLeft="@dimen/size_5"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_privacy_public"
+        app:layout_constraintBottom_toBottomOf="@id/tv_time"
+        app:layout_constraintLeft_toRightOf="@id/tv_time"
+        app:layout_constraintTop_toTopOf="@id/tv_time" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/btn_option"
-        android:paddingLeft="@dimen/size_10"
-        android:paddingTop="@dimen/size_10"
-        android:paddingRight="@dimen/size_3"
-        android:paddingBottom="@dimen/size_15">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="@dimen/size_40"
-            android:layout_height="@dimen/size_40"
-            android:scaleType="centerCrop" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/iv_avatar"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/iv_avatar"
-            android:text="Nhà Trong Ngõ"
-            android:textColor="@color/black_0"
-            android:textSize="@dimen/text_14"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_name"
-            android:layout_marginLeft="@dimen/size_10"
-            android:layout_marginTop="@dimen/size_2"
-            android:layout_toRightOf="@id/iv_avatar"
-            android:text="11 Tháng 10 lúc 21:22"
-            android:textColor="@color/black_9"
-            android:textSize="@dimen/text_12" />
-
-        <ImageView
-            android:id="@+id/iv_privacy"
-            android:layout_width="@dimen/size_12"
-            android:layout_height="@dimen/size_12"
-            android:layout_alignTop="@id/tv_time"
-            android:layout_alignBottom="@id/tv_time"
-            android:layout_marginLeft="@dimen/size_5"
-            android:layout_toRightOf="@id/tv_time"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_privacy_public" />
-    </RelativeLayout>
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="iv_avatar,tv_time" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_info"
         android:layout_marginLeft="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_10"
         android:layout_marginRight="@dimen/size_10"
         android:textColor="@color/black_3"
         android:textSize="@dimen/text_14"
-        android:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@id/barrier_header" />
 
-    <LinearLayout
-        android:id="@+id/layout_image"
-        android:layout_below="@id/tv_title"
-        android:layout_marginTop="@dimen/size_10"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/iv_2n3_1"
+        android:layout_width="0dp"
         android:layout_height="@dimen/size_360"
-        android:orientation="horizontal"
-        android:visibility="visible">
+        android:background="@drawable/border_image"
+        android:padding="@dimen/size_0_5"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintWidth_percent="0.5" />
 
-        <ImageView
-            android:id="@+id/iv_2n3_1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/border_image"
-            android:padding="@dimen/size_0_5"
-            android:scaleType="centerCrop" />
+    <ImageView
+        android:id="@+id/iv_2n3_2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_180"
+        android:layout_marginLeft="@dimen/size_2"
+        android:background="@drawable/border_image"
+        android:padding="@dimen/size_0_5"
+        android:scaleType="centerCrop"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintLeft_toRightOf="@id/iv_2n3_1"
+        app:layout_constraintTop_toTopOf="@id/iv_2n3_1" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/size_2"
-            android:layout_weight="1"
-            android:orientation="vertical">
+    <ImageView
+        android:id="@+id/iv_2n3_3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/size_2"
+        android:layout_marginTop="@dimen/size_2"
+        android:background="@drawable/border_image"
+        android:padding="@dimen/size_0_5"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintLeft_toRightOf="@id/iv_2n3_1"
+        app:layout_constraintTop_toBottomOf="@id/iv_2n3_2"
+        app:layout_constraintBottom_toBottomOf="@id/iv_2n3_1" />
 
-            <ImageView
-                android:id="@+id/iv_2n3_2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/border_image"
-                android:padding="@dimen/size_0_5"
-                android:scaleType="centerCrop" />
-
-            <ImageView
-                android:id="@+id/iv_2n3_3"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/size_2"
-                android:layout_weight="1"
-                android:background="@drawable/border_image"
-                android:padding="@dimen/size_0_5"
-                android:scaleType="centerCrop" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="iv_2n3_1,iv_2n3_2,iv_2n3_3" />
 
     <LinearLayout
         android:id="@+id/layout_reaction_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_image"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/size_8"
         android:paddingTop="@dimen/size_10"
         android:paddingBottom="@dimen/size_10"
-        android:visibility="visible">
+        app:layout_constraintTop_toBottomOf="@id/barrier_body">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ic_like"
@@ -210,7 +205,6 @@
             android:textColor="@color/black_6"
             android:textSize="@dimen/text_14" />
 
-
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -240,93 +234,91 @@
         android:id="@+id/v_under_reaction_count"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_0_5"
-        android:layout_below="@id/layout_reaction_count"
         android:layout_marginLeft="@dimen/size_10"
         android:layout_marginRight="@dimen/size_10"
         android:background="@color/black_e6"
-        android:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@id/layout_reaction_count" />
 
-    <LinearLayout
-        android:id="@+id/layout_reaction"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/v_under_reaction_count"
-        android:orientation="horizontal"
-        android:visibility="visible">
+    <com.example.tonghai.testapp.view.RippleViewLinear
+        android:id="@+id/ripple_btn_like"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_40"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="@id/item_view"
+        app:layout_constraintTop_toBottomOf="@id/v_under_reaction_count"
+        app:layout_constraintWidth_percent="0.333"
+        app:rv_alpha="0"
+        app:rv_color="@android:color/transparent"
+        app:rv_zoomScale="1.1">
 
-        <com.example.tonghai.testapp.view.RippleViewLinear
-            android:id="@+id/ripple_btn_like"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/size_40"
-            android:layout_weight="1"
-            android:gravity="center"
-            app:rv_alpha="0"
-            app:rv_color="@android:color/transparent"
-            app:rv_zoomScale="1.1">
+        <ImageView
+            android:layout_width="@dimen/size_20"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_btn_like" />
 
-            <ImageView
-                android:layout_width="@dimen/size_20"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_btn_like" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_5"
+            android:text="Thích"
+            android:textColor="@color/black_6"
+            android:textSize="@dimen/text_14" />
+    </com.example.tonghai.testapp.view.RippleViewLinear>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_5"
-                android:text="Thích"
-                android:textColor="@color/black_6"
-                android:textSize="@dimen/text_14" />
-        </com.example.tonghai.testapp.view.RippleViewLinear>
+    <com.example.tonghai.testapp.view.RippleViewLinear
+        android:id="@+id/ripple_btn_comment"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_40"
+        android:layout_weight="1"
+        android:gravity="center"
+        app:layout_constraintLeft_toRightOf="@id/ripple_btn_like"
+        app:layout_constraintTop_toBottomOf="@id/v_under_reaction_count"
+        app:layout_constraintWidth_percent="0.334"
+        app:rv_alpha="0"
+        app:rv_color="@android:color/transparent"
+        app:rv_zoomScale="1.1">
 
-        <com.example.tonghai.testapp.view.RippleViewLinear
-            android:id="@+id/ripple_btn_comment"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/size_40"
-            android:layout_weight="1"
-            android:gravity="center"
-            app:rv_alpha="0"
-            app:rv_color="@android:color/transparent"
-            app:rv_zoomScale="1.1">
+        <ImageView
+            android:layout_width="@dimen/size_20"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_btn_comment" />
 
-            <ImageView
-                android:layout_width="@dimen/size_20"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_btn_comment" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_5"
+            android:text="Bình luận"
+            android:textColor="@color/black_6"
+            android:textSize="@dimen/text_14" />
+    </com.example.tonghai.testapp.view.RippleViewLinear>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_5"
-                android:text="Bình luận"
-                android:textColor="@color/black_6"
-                android:textSize="@dimen/text_14" />
-        </com.example.tonghai.testapp.view.RippleViewLinear>
+    <com.example.tonghai.testapp.view.RippleViewLinear
+        android:id="@+id/ripple_btn_share"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_40"
+        android:layout_weight="1"
+        android:gravity="center"
+        app:layout_constraintLeft_toRightOf="@id/ripple_btn_comment"
+        app:layout_constraintTop_toBottomOf="@id/v_under_reaction_count"
+        app:layout_constraintWidth_percent="0.333"
+        app:rv_alpha="0"
+        app:rv_color="@android:color/transparent"
+        app:rv_zoomScale="1.1">
 
-        <com.example.tonghai.testapp.view.RippleViewLinear
-            android:id="@+id/ripple_btn_share"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/size_40"
-            android:layout_weight="1"
-            android:gravity="center"
-            app:rv_alpha="0"
-            app:rv_color="@android:color/transparent"
-            app:rv_zoomScale="1.1">
+        <ImageView
+            android:layout_width="@dimen/size_20"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_btn_share" />
 
-            <ImageView
-                android:layout_width="@dimen/size_20"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_btn_share" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_5"
-                android:text="Chia sẻ"
-                android:textColor="@color/black_6"
-                android:textSize="@dimen/text_14" />
-        </com.example.tonghai.testapp.view.RippleViewLinear>
-    </LinearLayout>
-</RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_5"
+            android:text="Chia sẻ"
+            android:textColor="@color/black_6"
+            android:textSize="@dimen/text_14" />
+    </com.example.tonghai.testapp.view.RippleViewLinear>
+</android.support.constraint.ConstraintLayout>
