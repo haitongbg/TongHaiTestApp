@@ -226,33 +226,39 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     tvTitle.setText(title);
                     tvTitle.setVisibility(View.VISIBLE);
                 } else tvTitle.setVisibility(View.GONE);
-                Video video = newsFeed.getVideo();
-                if (video != null) {
-                    framePlayer.setVisibility(View.VISIBLE);
-                    ivVideoThumb.setVisibility(View.VISIBLE);
-                    btnPlay.setVisibility(View.VISIBLE);
-                    int height = screenWidth * 16 / 9;
-                    if (video.getWidth() > 0 && video.getHeight() > 0) {
-                        height = screenWidth * video.getHeight() / video.getWidth();
-                    }
-                    framePlayer.getLayoutParams().width = screenWidth;
-                    framePlayer.getLayoutParams().height = height;
-                    ivVideoThumb.getLayoutParams().width = screenWidth;
-                    ivVideoThumb.getLayoutParams().height = height;
-                    String thumb = video.getThumb_url();
-                    if (thumb != null && !thumb.isEmpty())
-                        mRequestManager.load(thumb).thumbnail(0.1f).listener(new RequestListener<Drawable>() {
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                return false;
-                            }
+                if (newsFeed.getVideos() != null && !newsFeed.getVideos().isEmpty()) {
+                    Video video = newsFeed.getVideos().get(0);
+                    if (video != null) {
+                        framePlayer.setVisibility(View.VISIBLE);
+                        ivVideoThumb.setVisibility(View.VISIBLE);
+                        btnPlay.setVisibility(View.VISIBLE);
+                        int height = screenWidth * 16 / 9;
+                        if (video.getWidth() > 0 && video.getHeight() > 0) {
+                            height = screenWidth * video.getHeight() / video.getWidth();
+                        }
+                        framePlayer.getLayoutParams().width = screenWidth;
+                        framePlayer.getLayoutParams().height = height;
+                        ivVideoThumb.getLayoutParams().width = screenWidth;
+                        ivVideoThumb.getLayoutParams().height = height;
+                        String thumb = video.getThumb_url();
+                        if (thumb != null && !thumb.isEmpty())
+                            mRequestManager.load(thumb).thumbnail(0.1f).listener(new RequestListener<Drawable>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                    return false;
+                                }
 
-                            @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                ivVideoThumb.setImageDrawable(resource);
-                                return false;
-                            }
-                        }).into(screenWidth, height);
+                                @Override
+                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                    ivVideoThumb.setImageDrawable(resource);
+                                    return false;
+                                }
+                            }).into(screenWidth, height);
+                    } else {
+                        framePlayer.setVisibility(View.GONE);
+                        ivVideoThumb.setVisibility(View.GONE);
+                        btnPlay.setVisibility(View.GONE);
+                    }
                 } else {
                     framePlayer.setVisibility(View.GONE);
                     ivVideoThumb.setVisibility(View.GONE);

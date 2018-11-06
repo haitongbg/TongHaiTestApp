@@ -3,11 +3,20 @@ package com.example.tonghai.testapp.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.tonghai.testapp.utils.Constant;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class NewsFeed implements Parcelable{
+public class NewsFeed implements Parcelable {
     @SerializedName("shares")
     private ArrayList<Share> shares;
     @SerializedName("comment")
@@ -18,16 +27,17 @@ public class NewsFeed implements Parcelable{
     private CardInfo card_info;
     @SerializedName("user")
     private User user;
-    @SerializedName("video")
-    private Video video;
-    @SerializedName("images")
-    private ArrayList<Image> images;
     @SerializedName("card_type")
     private int card_type;
     @SerializedName("title")
     private String title;
     @SerializedName("id")
     private int id;
+    @SerializedName("data")
+    private JsonElement data;
+    private ArrayList<Video> videos;
+    private ArrayList<Image> images;
+    private Gson gson = new Gson();
 
     public NewsFeed() {
     }
@@ -42,11 +52,11 @@ public class NewsFeed implements Parcelable{
         likeData = in.readParcelable(LikeData.class.getClassLoader());
         card_info = in.readParcelable(CardInfo.class.getClassLoader());
         user = in.readParcelable(User.class.getClassLoader());
-        video = in.readParcelable(Video.class.getClassLoader());
-        images = in.createTypedArrayList(Image.CREATOR);
         card_type = in.readInt();
         title = in.readString();
         id = in.readInt();
+        videos = in.createTypedArrayList(Video.CREATOR);
+        images = in.createTypedArrayList(Image.CREATOR);
     }
 
     @Override
@@ -56,11 +66,11 @@ public class NewsFeed implements Parcelable{
         dest.writeParcelable(likeData, flags);
         dest.writeParcelable(card_info, flags);
         dest.writeParcelable(user, flags);
-        dest.writeParcelable(video, flags);
-        dest.writeTypedList(images);
         dest.writeInt(card_type);
         dest.writeString(title);
         dest.writeInt(id);
+        dest.writeTypedList(videos);
+        dest.writeTypedList(images);
     }
 
     @Override
@@ -120,14 +130,6 @@ public class NewsFeed implements Parcelable{
         this.user = user;
     }
 
-    public Video getVideo() {
-        return video;
-    }
-
-    public void setVideo(Video video) {
-        this.video = video;
-    }
-
     public int getCard_type() {
         return card_type;
     }
@@ -152,7 +154,41 @@ public class NewsFeed implements Parcelable{
         this.id = id;
     }
 
+    public ArrayList<Video> getVideos() {
+        if (videos == null && this.card_type == Constant.TYPE_VIDEO && this.data != null) {
+            videos = new ArrayList<>();
+            if (data.isJsonArray()) {
+                JsonArray jsonArray = data.getAsJsonArray();
+                if (jsonArray.size() > 0) {
+                    for (int i = 0, z=jsonArray.size(); i<z; i++) {
+                        JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                        Video video = gson.fromJson(jsonObject.toString(), Video.class);
+                        if (video != null) this.videos.add(video);
+                    }
+                }
+            }
+        }
+        return videos;
+    }
+
+    public void setVideos(ArrayList<Video> videos) {
+        this.videos = videos;
+    }
+
     public ArrayList<Image> getImages() {
+        if (images == null && this.card_type == Constant.TYPE_IMAGE && this.data != null) {
+            images = new ArrayList<>();
+            if (data.isJsonArray()) {
+                JsonArray jsonArray = data.getAsJsonArray();
+                if (jsonArray.size() > 0) {
+                    for (int i = 0, z=jsonArray.size(); i<z; i++) {
+                        JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                        Image image = gson.fromJson(jsonObject.toString(), Image.class);
+                        if (image != null) this.images.add(image);
+                    }
+                }
+            }
+        }
         return images;
     }
 
@@ -160,7 +196,7 @@ public class NewsFeed implements Parcelable{
         this.images = images;
     }
 
-    public static class CommentData implements Parcelable{
+    public static class CommentData implements Parcelable {
         @SerializedName("data")
         private ArrayList<Comment> data;
         @SerializedName("total")
