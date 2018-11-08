@@ -13,11 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8883424564878892~3471125047" />
 
-        <activity android:name=".activity.AdmodActivity">
+        <activity android:name=".activity.TestActivity">
         </activity>
         <activity android:name=".activity.NewsFeedActivity">
             <intent-filter>

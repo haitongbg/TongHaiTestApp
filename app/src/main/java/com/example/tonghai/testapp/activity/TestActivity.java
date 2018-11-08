@@ -9,22 +9,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.tonghai.testapp.R;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
-public class AdmodActivity extends AppCompatActivity {
+public class TestActivity extends AppCompatActivity {
     LinearLayout layoutTop;
     RelativeLayout layoutBottom;
-    private AdView mAdView;
     private float downY;
     private int lastHeight, height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admod);
-        MobileAds.initialize(this, "ca-app-pub-8883424564878892~3471125047");
+        setContentView(R.layout.activity_test);
         initUI();
     }
 
@@ -32,9 +27,6 @@ public class AdmodActivity extends AppCompatActivity {
     private void initUI() {
         layoutBottom = findViewById(R.id.layout_bottom);
         layoutTop = findViewById(R.id.layout_top);
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
         layoutBottom.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
